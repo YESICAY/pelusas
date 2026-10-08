@@ -1,0 +1,22 @@
+# IntelliJ / VS Code
+.idea/
+*.iml
+.vscode/
+
+# Backend (Maven)
+target/
+
+# Frontend (Node)
+node_modules/
+dist/
+
+# Playwright
+test-results/
+playwright-report/
+
+# Base de datos local H2 (archivos)
+*.mv.db
+*.trace.db
+
+# Sistema operativo
+Thumbs.db

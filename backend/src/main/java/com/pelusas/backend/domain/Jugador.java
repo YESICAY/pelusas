@@ -1,5 +1,7 @@
 package com.pelusas.backend.domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -9,6 +11,7 @@ public class Jugador {
 
     private final String nombre;
     private final Map<Integer, Integer> cartasDelante = new TreeMap<>();
+    private final List<Carta> montonPuntos = new ArrayList<>();
 
     public Jugador(String nombre) {
         if (nombre == null || nombre.isBlank()) {
@@ -49,4 +52,22 @@ public class Jugador {
     public Map<Integer, Integer> cartasDelante() {
         return new TreeMap<>(cartasDelante);
     }
+
+    public void guardarCartasDelante(){
+        for (Map.Entry<Integer, Integer> grupo : cartasDelante.entrySet()){
+            for (int i = 0; i < grupo.getValue(); i++){
+                montonPuntos.add(new Carta(grupo.getKey()));
+            }
+        }
+        cartasDelante.clear();
+    }
+
+    public int puntuacion(){
+        int total = 0;
+        for (Carta carta : montonPuntos){
+            total += carta.valor();
+        }
+        return total;
+    }
+
 }

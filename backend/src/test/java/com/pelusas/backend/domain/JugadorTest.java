@@ -107,4 +107,115 @@ class JugadorTest {
         assertEquals(0, jugador.cantidadDelante(5));
     }
 
+    @Test
+    void jugadorNuevoTienePuntuacionCeroYMontonVacio() {
+        Jugador jugador = new Jugador("Ana");
+
+        assertEquals(0, jugador.puntuacion());
+        assertTrue(jugador.montonPuntos().isEmpty());
+    }
+
+    @Test
+    void guardarCartasDelanteLasMueveAlMontonYLasQuitaDeDelante() {
+        Jugador jugador = jugadorConCartas(5, 5, 2);
+
+        jugador.guardarCartasDelante();
+
+        assertEquals(0, jugador.totalCartasDelante());
+        assertEquals(3, jugador.montonPuntos().size());
+        assertEquals(12, jugador.puntuacion());
+    }
+
+    @Test
+    void guardarSinCartasDelanteNoCambiaNada() {
+        Jugador jugador = new Jugador("Ana");
+
+        jugador.guardarCartasDelante();
+
+        assertEquals(0, jugador.puntuacion());
+        assertTrue(jugador.montonPuntos().isEmpty());
+    }
+
+    @Test
+    void guardarVariasVecesAcumulaEnElMonton() {
+        Jugador jugador = jugadorConCartas(5);
+        jugador.guardarCartasDelante();
+        jugador.recibirCarta(new Carta(3));
+
+        jugador.guardarCartasDelante();
+
+        assertEquals(2, jugador.montonPuntos().size());
+        assertEquals(8, jugador.puntuacion());
+    }
+
+    @Test
+    void descartarNoSumaPuntos() {
+        Jugador jugador = jugadorConCartas(5, 5, 2);
+
+        jugador.descartarCartasDelante();
+
+        assertEquals(0, jugador.puntuacion());
+        assertTrue(jugador.montonPuntos().isEmpty());
+    }
+
+    @Test
+    void elMontonDevueltoNoSePuedeModificar() {
+        Jugador jugador = new Jugador("Ana");
+
+        assertThrows(UnsupportedOperationException.class,
+                () -> jugador.montonPuntos().add(new Carta(1)));
+    }
+
+    @Test
+    void quitarCartasDelanteDevuelveLaCantidadYQuitaSoloEseGrupo() {
+        Jugador jugador = jugadorConCartas(5, 5, 2);
+
+        int quitadas = jugador.quitarCartasDelante(5);
+
+        assertEquals(2, quitadas);
+        assertEquals(0, jugador.cantidadDelante(5));
+        assertEquals(1, jugador.cantidadDelante(2));
+    }
+
+    @Test
+    void quitarUnValorQueNoTieneDevuelveCero() {
+        Jugador jugador = jugadorConCartas(5);
+
+        assertEquals(0, jugador.quitarCartasDelante(9));
+        assertEquals(1, jugador.totalCartasDelante());
+    }
+
+    @Test
+    void robarCartasLasPasaDelanteDelJugadorActual() {
+        Jugador ladron = jugadorConCartas(2);
+        Jugador victima = jugadorConCartas(5, 5, 3);
+
+        int robadas = ladron.robarCartasDe(victima, 5);
+
+        assertEquals(2, robadas);
+        assertEquals(2, ladron.cantidadDelante(5));
+        assertEquals(3, ladron.totalCartasDelante());
+        assertEquals(0, victima.cantidadDelante(5));
+        assertEquals(1, victima.cantidadDelante(3));
+    }
+
+    @Test
+    void robarUnValorQueElOtroNoTieneNoCambiaNada() {
+        Jugador ladron = jugadorConCartas(2);
+        Jugador victima = jugadorConCartas(3);
+
+        int robadas = ladron.robarCartasDe(victima, 5);
+
+        assertEquals(0, robadas);
+        assertEquals(1, ladron.totalCartasDelante());
+        assertEquals(1, victima.totalCartasDelante());
+    }
+
+    @Test
+    void unJugadorNoPuedeRobarseASiMismo() {
+        Jugador jugador = jugadorConCartas(5, 5);
+
+        assertThrows(IllegalArgumentException.class, () -> jugador.robarCartasDe(jugador, 5));
+    }
+
 }

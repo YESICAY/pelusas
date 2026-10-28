@@ -53,21 +53,40 @@ public class Jugador {
         return new TreeMap<>(cartasDelante);
     }
 
-    public void guardarCartasDelante(){
-        for (Map.Entry<Integer, Integer> grupo : cartasDelante.entrySet()){
-            for (int i = 0; i < grupo.getValue(); i++){
+    public void guardarCartasDelante() {
+        for (Map.Entry<Integer, Integer> grupo : cartasDelante.entrySet()) {
+            for (int i = 0; i < grupo.getValue(); i++) {
                 montonPuntos.add(new Carta(grupo.getKey()));
             }
         }
         cartasDelante.clear();
     }
 
-    public int puntuacion(){
+    public int puntuacion() {
         int total = 0;
-        for (Carta carta : montonPuntos){
+        for (Carta carta : montonPuntos) {
             total += carta.valor();
         }
         return total;
     }
 
+    public List<Carta> montonPuntos() {
+        return List.copyOf(montonPuntos);
+    }
+
+    public int quitarCartasDelante(int valor) {
+        Integer cantidad = cartasDelante.remove(valor);
+        return cantidad == null ? 0 : cantidad;
+    }
+
+    public int robarCartasDe(Jugador otro, int valor) {
+        if (otro == this) {
+            throw new IllegalArgumentException("Un jugador no puede robarse a si mismo");
+        }
+        int cantidad = otro.quitarCartasDelante(valor);
+        for (int i = 0; i < cantidad; i++) {
+            recibirCarta(new Carta(valor));
+        }
+        return cantidad;
+    }
 }

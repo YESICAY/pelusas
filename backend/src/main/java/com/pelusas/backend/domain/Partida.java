@@ -16,6 +16,7 @@ public class Partida {
     private int indiceTurno = 0;
     private int cartasSacadasEnTurno = 0;
     private Carta ultimaCarta = null;
+    private Carta ultimaCartaSacada = null;
     private boolean terminada = false;
     private List<Jugador> ganadores = List.of();
 
@@ -36,9 +37,7 @@ public class Partida {
         return jugadores.get(indiceTurno);
     }
 
-    public List<Jugador> jugadores() {
-        return List.copyOf(jugadores);
-    }
+    public List<Jugador> jugadores() {return List.copyOf(jugadores);}
 
     public boolean estaTerminada() {
         return terminada;
@@ -52,6 +51,8 @@ public class Partida {
         return mazo.cantidadRestante();
     }
 
+    public Carta ultimaCartaSacada() {return ultimaCartaSacada;}
+
     public void guardarCartas() {
         validarEnCurso();
         if (cartasSacadasEnTurno > 0) {
@@ -64,6 +65,7 @@ public class Partida {
         validarEnCurso();
         Jugador actual = jugadorActual();
         Carta carta = mazo.sacarCarta();
+        ultimaCartaSacada = carta;
         ResultadoSacar resultado;
         if (actual.provocaPerdida(carta)) {
             actual.descartarCartasDelante();

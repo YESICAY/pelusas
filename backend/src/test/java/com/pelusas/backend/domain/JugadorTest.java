@@ -218,4 +218,20 @@ class JugadorTest {
         assertThrows(IllegalArgumentException.class, () -> jugador.robarCartasDe(jugador, 5));
     }
 
+    @Test
+    void cantidadEnMontonCuentaSoloLasCartasDeEseValor() {
+        Jugador jugador = jugadorConCartas(5, 5, 2);
+        jugador.guardarCartasDelante();
+
+        assertEquals(2, jugador.cantidadEnMonton(5));
+        assertEquals(1, jugador.cantidadEnMonton(2));
+        assertEquals(0, jugador.cantidadEnMonton(9));
+    }
+
+    @Test
+    void cantidadEnMontonNoCuentaLasCartasQueEstanDelante() {
+        Jugador jugador = jugadorConCartas(5);
+
+        assertEquals(0, jugador.cantidadEnMonton(5));
+    }
 }

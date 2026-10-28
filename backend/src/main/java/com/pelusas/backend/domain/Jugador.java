@@ -70,6 +70,16 @@ public class Jugador {
         return total;
     }
 
+    public int cantidadEnMonton(int valor) {
+        int cantidad = 0;
+        for (Carta carta : montonPuntos) {
+            if (carta.valor() == valor) {
+                cantidad++;
+            }
+        }
+        return cantidad;
+    }
+
     public List<Carta> montonPuntos() {
         return List.copyOf(montonPuntos);
     }

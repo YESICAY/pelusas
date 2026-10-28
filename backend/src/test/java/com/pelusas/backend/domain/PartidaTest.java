@@ -267,16 +267,35 @@ class PartidaTest {
     }
 
     @Test
-    void elEmpateSeDesempataPorMayorCantidadDeCartas() {
-        Partida partida = partida(6, 4, 10);
+    void elEmpateSeDesempataPorMayorCantidadDeCartasDeValor1() {
+        Partida partida = partida(1, 1, 2, 4);
         Jugador ana = partida.jugadorActual();
+        partida.sacarCarta();
         partida.sacarCarta();
         partida.sacarCarta();
         partida.finalizarTurno();
 
         partida.sacarCarta();
 
-        assertEquals(10, ana.puntuacion());
+        assertEquals(4, ana.puntuacion());
+        assertEquals(4, partida.jugadores().get(1).puntuacion());
+        assertEquals(List.of(ana), partida.ganadores());
+    }
+
+    @Test
+    void siEmpatanEnElValor1SeComparaElValor2() {
+        Partida partida = partida(1, 2, 2, 1, 4);
+        Jugador ana = partida.jugadorActual();
+        partida.sacarCarta();
+        partida.sacarCarta();
+        partida.sacarCarta();
+        partida.finalizarTurno();
+        partida.sacarCarta();
+
+        partida.sacarCarta();
+
+        assertEquals(5, ana.puntuacion());
+        assertEquals(5, partida.jugadores().get(1).puntuacion());
         assertEquals(List.of(ana), partida.ganadores());
     }
 

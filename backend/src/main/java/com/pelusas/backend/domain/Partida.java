@@ -135,9 +135,14 @@ public class Partida {
     }
 
     private List<Jugador> calcularGanadores() {
-        List<Jugador> candidatos = conMejorValor(jugadores, Jugador::puntuacion);
-        if (candidatos.size() > 1) {
-            candidatos = conMejorValor(candidatos, jugador -> jugador.montonPuntos().size());
+        return desempatar(conMejorValor(jugadores, Jugador::puntuacion));
+    }
+
+    static List<Jugador> desempatar(List<Jugador> empatados) {
+        List<Jugador> candidatos = empatados;
+        for (int valor = Carta.VALOR_MINIMO; valor <= Carta.VALOR_MAXIMO; valor++) {
+            int valorActual = valor;
+            candidatos = conMejorValor(candidatos, jugador -> jugador.cantidadEnMonton(valorActual));
         }
         return candidatos;
     }

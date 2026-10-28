@@ -218,4 +218,15 @@ class PartidaServiceTest {
         assertEquals(12, ana.puntuacion());
         assertTrue(ana.ganador());
     }
+
+    @Test
+    void cadaPartidaCreadaRecibeUnIdDistinto() {
+        PartidaDto primera = crearConMazo(1, 2);
+        PartidaDto segunda = crearConMazo(3, 4);
+
+        assertEquals(1L, primera.id());
+        assertEquals(2L, segunda.id());
+        assertEquals(2L, servicio.consultar(2L).id());
+        assertEquals("Ana", servicio.consultar(1L).turnoDe());
+    }
 }

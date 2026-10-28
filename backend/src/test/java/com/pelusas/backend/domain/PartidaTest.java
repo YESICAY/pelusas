@@ -305,4 +305,19 @@ class PartidaTest {
         assertEquals(0, ana.puntuacion());
         assertEquals(2, partida.ganadores().size());
     }
+
+    @Test
+    void sacarCartaRegistraLaUltimaCartaSacadaAunqueHagaPerderElTurno() {
+        Partida partida = partida(5, 2, 3, 5, 9);
+
+        partida.sacarCarta();
+        assertEquals(new Carta(5), partida.ultimaCartaSacada());
+        partida.sacarCarta();
+        assertEquals(new Carta(2), partida.ultimaCartaSacada());
+        partida.sacarCarta();
+        assertEquals(new Carta(3), partida.ultimaCartaSacada());
+        partida.sacarCarta();
+
+        assertEquals(new Carta(5), partida.ultimaCartaSacada());
+    }
 }

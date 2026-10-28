@@ -65,7 +65,8 @@ public class PartidaService {
         if (partida.estaTerminada()) {
             repositorio.save(PartidaMapper.entidad(partida, LocalDateTime.now()));
         }
-        return new SacarCartaDto(resultado.name(), PartidaMapper.partida(id, partida));
+        return new SacarCartaDto(resultado.name(), partida.ultimaCartaSacada().valor(),
+                PartidaMapper.partida(id, partida));
     }
 
     public synchronized PartidaDto robarCartas(long id, String jugador, String victima) {

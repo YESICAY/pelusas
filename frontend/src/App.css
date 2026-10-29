@@ -1,45 +1,605 @@
-main {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 1rem;
-  text-align: left;
+/* ===== Estructura ===== */
+.juego {
+  min-height: 100vh;
+  padding-bottom: 3rem;
+  background: radial-gradient(ellipse at 50% 30%, #1f7a4d 0%, #0d3b27 65%, #082418 100%);
+  color: #f3f3f3;
 }
 
-input,
-select {
-  margin: 0.25rem 0.5rem 0.25rem 0;
-  padding: 0.4rem;
+.contenedor {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.titulo {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.titulo h1 {
+  margin: 0;
+  font-size: 2.6rem;
+  letter-spacing: 0.1em;
+  text-shadow: 0 3px 0 rgba(0, 0, 0, 0.4);
+}
+
+.titulo p {
+  margin: 0.2rem 0 0;
+  opacity: 0.8;
+}
+
+/* ===== Cartas ===== */
+.carta {
+  --w: 70px;
+  --h: 100px;
+  position: relative;
+  flex: none;
+  width: var(--w);
+  height: var(--h);
+  border-radius: 10px;
+  border: 2px solid var(--c, #444);
+  color: var(--c, #444);
+  background: linear-gradient(160deg, #ffffff, #ececec);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+  font-weight: 800;
+  user-select: none;
+}
+
+.carta .esquina {
+  position: absolute;
+  font-size: 0.85rem;
+  line-height: 1;
+}
+
+.carta .arriba {
+  top: 6px;
+  left: 7px;
+}
+
+.carta .abajo {
+  right: 7px;
+  bottom: 6px;
+  transform: rotate(180deg);
+}
+
+.carta .centro {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 2.5rem;
+}
+
+.carta.pequena {
+  --w: 46px;
+  --h: 66px;
+  border-radius: 7px;
+}
+
+.carta.pequena .centro {
+  font-size: 1.6rem;
+}
+
+.carta.pequena .esquina {
+  font-size: 0.6rem;
+}
+
+.carta.resaltada {
+  box-shadow: 0 0 18px 4px rgba(255, 214, 10, 0.75);
+}
+
+.v1 { --c: #6c757d; }
+.v2 { --c: #2a9d8f; }
+.v3 { --c: #3a86ff; }
+.v4 { --c: #7b2cbf; }
+.v5 { --c: #d62828; }
+.v6 { --c: #f77f00; }
+.v7 { --c: #a67c00; }
+.v8 { --c: #2d6a4f; }
+.v9 { --c: #ff006e; }
+.v10 { --c: #1d3557; border-color: #d4a017; }
+
+.carta.reverso {
+  --c: #ffffff;
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+  font-size: 1.7rem;
+  border-color: #ffffff;
+  background: repeating-linear-gradient(45deg, #1b4d8f 0 8px, #163f73 8px 16px);
+}
+
+.carta.reverso.pequena {
+  font-size: 1rem;
+}
+
+.carta.nueva {
+  animation: repartir 0.45s ease-out;
+}
+
+/* ===== Zona central ===== */
+.cabecera-mesa {
+  text-align: center;
+}
+
+.cabecera-mesa h2 {
+  margin: 0.4rem 0;
+  font-size: 1.6rem;
+}
+
+.centro-mesa {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 3rem;
+  margin: 0.5rem 0 1rem;
+}
+
+.zona-mazo,
+.zona-ultima {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 150px;
+}
+
+.zona-mazo p,
+.subtitulo {
+  margin: 0;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.mazo {
+  position: relative;
+  width: 80px;
+  height: 112px;
+}
+
+.capa-mazo {
+  position: absolute;
+  left: calc(var(--i) * 3px);
+  top: calc(var(--i) * -3px);
+}
+
+.contador {
+  position: absolute;
+  right: -14px;
+  bottom: -10px;
+  min-width: 34px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #ffd60a;
+  color: #222;
+  font-weight: 800;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.hueco-mazo,
+.hueco {
+  display: grid;
+  place-items: center;
+  width: 70px;
+  height: 100px;
+  border: 2px dashed rgba(255, 255, 255, 0.4);
+  border-radius: 10px;
+  opacity: 0.7;
+}
+
+.revelada .carta {
+  animation: voltear 0.5s ease-out;
+}
+
+.revelada.mala .carta {
+  box-shadow: 0 0 22px 8px rgba(255, 50, 50, 0.9);
+}
+
+.etiqueta-ultima {
+  font-weight: 700;
+  min-height: 1.2rem;
+}
+
+.etiqueta-ultima.mala {
+  color: #ff8080;
+}
+
+/* ===== Jugadores ===== */
+.jugadores {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 1rem;
+}
+
+.jugador {
+  padding: 0.8rem;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.jugador.turno {
+  border-color: #ffd60a;
+  animation: pulso 1.8s ease-in-out infinite;
+}
+
+.jugador.ganador {
+  border-color: gold;
+  box-shadow: 0 0 22px 6px rgba(255, 215, 0, 0.7);
+}
+
+.jugador.efecto-perdido {
+  animation: sacudir 0.6s, destello-rojo 0.9s;
+}
+
+.jugador.efecto-robo {
+  animation: brillo-dorado 1s;
+}
+
+.jugador.efecto-guardado {
+  animation: brillo-verde 1s;
+}
+
+.jugador header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.jugador h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #ffd60a;
+  color: #222;
+  font-weight: 800;
+}
+
+.delante {
+  margin: 0.6rem 0;
+  min-height: 150px;
+}
+
+.delante strong {
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
+.grupos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.4rem;
+}
+
+.grupo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.pila {
+  position: relative;
+  height: 106px;
+  width: calc(70px + (var(--n) - 1) * 16px);
+}
+
+.capa-carta {
+  position: absolute;
+  top: calc(var(--i) * 2px);
+  left: calc(var(--i) * 16px);
+}
+
+.etiqueta {
+  font-size: 0.8rem;
+}
+
+.vacio {
+  margin: 0.8rem 0;
+  opacity: 0.6;
+  font-style: italic;
+}
+
+.monton {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 50px;
+}
+
+.mini-pila {
+  display: flex;
+  min-width: 46px;
+}
+
+.mini-pila .carta {
+  margin-right: -34px;
+}
+
+.monton p {
+  margin: 0 0 0 0.6rem;
+  font-size: 0.95rem;
+}
+
+/* ===== Acciones ===== */
+.barra-acciones {
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 1rem;
+  padding: 0.8rem;
+  border-radius: 14px 14px 0 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+}
+
+.boton {
+  padding: 0.7rem 1.2rem;
+  border: 0;
+  border-radius: 999px;
+  background: #3a86ff;
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.4);
+}
+
+.boton:hover:not(:disabled) {
+  filter: brightness(1.15);
+}
+
+.boton:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.boton.sacar { background: #e07a00; }
+.boton.guardar { background: #2d9d5b; }
+.boton.terminar { background: #7b2cbf; }
+.boton.robar { background: #d62828; }
+.boton.secundario { background: #4a5568; }
+
+.separador {
+  width: 1px;
+  height: 30px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+select,
+input {
+  padding: 0.55rem 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.45);
+  color: #ffffff;
+}
+
+/* ===== Mensajes, registro, fin ===== */
+.mensaje,
+.error {
+  margin: 0.4rem auto;
+  padding: 0.55rem 1rem;
+  max-width: 760px;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.mensaje {
+  background: rgba(46, 125, 50, 0.85);
+}
+
+.error {
+  background: rgba(192, 57, 43, 0.9);
+}
+
+.registro {
+  margin: 1rem auto 0;
+  padding: 0.6rem 1rem 0.6rem 2rem;
+  max-width: 760px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.3);
+  font-size: 0.9rem;
+}
+
+.registro li:first-child {
+  font-weight: 700;
+}
+
+.fin {
+  margin: 0.5rem auto 1rem;
+  padding: 0.8rem 1.4rem;
+  max-width: 520px;
+  border: 2px solid gold;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.fin h3 {
+  margin: 0 0 0.4rem;
+  text-align: center;
+}
+
+.fin li {
+  padding: 0.2rem 0;
+}
+
+.fin .ganador-fila {
+  color: gold;
+  font-weight: 800;
+}
+
+.pie {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+/* ===== Pantalla de configuración ===== */
+.config {
+  max-width: 480px;
+  margin: 1rem auto;
+  padding: 1.2rem;
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.config h2 {
+  margin-top: 0;
+  text-align: center;
+}
+
+.abanico {
+  display: flex;
+  justify-content: center;
+  height: 120px;
+  margin: 0.5rem 0 1rem;
+}
+
+.ficha {
+  margin-left: -16px;
+  rotate: calc((var(--k) - 2) * 9deg);
+  animation: flotar 3s ease-in-out infinite;
+  animation-delay: calc(var(--k) * 0.25s);
+}
+
+.fila-nombre {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0.5rem 0;
+}
+
+.fila-nombre input {
+  flex: 1;
 }
 
 .acciones {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  margin: 0.75rem 0;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 1rem;
 }
 
-.jugadores {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
+.historial {
+  max-width: 760px;
+  margin: 0.8rem auto;
+  padding: 0.6rem 1rem 0.6rem 2rem;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.3);
 }
 
-.jugador {
-  flex: 1 1 250px;
-  border: 1px solid #888;
-  border-radius: 8px;
-  padding: 0.75rem;
+/* ===== Animaciones ===== */
+@keyframes repartir {
+  from {
+    opacity: 0;
+    transform: translate(-70px, -90px) rotate(-20deg) scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
-.jugador.turno {
-  border: 2px solid #2e9e4f;
+@keyframes voltear {
+  from {
+    opacity: 0;
+    transform: perspective(500px) rotateY(90deg) scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
-.error {
-  color: #c0392b;
-  font-weight: bold;
+@keyframes flotar {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -9px;
+  }
 }
 
-.mensaje {
-  color: #2e7d32;
+@keyframes pulso {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 214, 10, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 16px 4px rgba(255, 214, 10, 0.55);
+  }
+}
+
+@keyframes sacudir {
+  0%,
+  100% {
+    translate: 0;
+  }
+  20% {
+    translate: -10px;
+  }
+  40% {
+    translate: 10px;
+  }
+  60% {
+    translate: -8px;
+  }
+  80% {
+    translate: 8px;
+  }
+}
+
+@keyframes destello-rojo {
+  from {
+    background-color: rgba(220, 40, 40, 0.8);
+  }
+  to {
+    background-color: rgba(0, 0, 0, 0.35);
+  }
+}
+
+@keyframes brillo-dorado {
+  0%,
+  100% {
+    box-shadow: none;
+  }
+  50% {
+    box-shadow: 0 0 24px 8px rgba(255, 214, 10, 0.85);
+  }
+}
+
+@keyframes brillo-verde {
+  0%,
+  100% {
+    box-shadow: none;
+  }
+  50% {
+    box-shadow: 0 0 24px 8px rgba(60, 220, 120, 0.8);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+  }
 }

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+
+<h1>Carta.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2838eb_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2838eb_1'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package com.pelusas.backend.domain;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2838eb_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2838eb_2'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2838eb_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2838eb_3'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>public record Carta(int valor) {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2838eb_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2838eb_4'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2838eb_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2838eb_5'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public static final int VALOR_MINIMO = 1;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2838eb_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2838eb_6'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public static final int VALOR_MAXIMO = 10;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2838eb_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2838eb_7'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2838eb_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2838eb_8'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    public Carta{</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2838eb_9'/>
+9
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2838eb_9'>4</a>
+<span>
+
+1. &#60;init&#62; : changed conditional boundary &rarr; KILLED<br/>
+
+2. &#60;init&#62; : changed conditional boundary &rarr; KILLED<br/>
+
+3. &#60;init&#62; : negated conditional &rarr; KILLED<br/>
+
+4. &#60;init&#62; : negated conditional &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if (valor &#60;  VALOR_MINIMO || valor &#62; VALOR_MAXIMO){</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2838eb_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2838eb_10'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            throw new IllegalArgumentException(</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2838eb_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2838eb_11'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                    &#34;Valor de la carta debe estar entre &#34; + VALOR_MINIMO</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2838eb_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2838eb_12'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                    + &#34; y &#34; + VALOR_MAXIMO + &#34;, pero fue: &#34; + valor);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2838eb_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2838eb_13'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2838eb_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2838eb_14'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2838eb_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2838eb_15'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2838eb_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2838eb_16'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2838eb_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2838eb_17'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2838eb_9'>9</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2838eb_9'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>&#60;init&#62;<br/><b>Killed by : </b>com.pelusas.backend.domain.CartaTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.CartaTest]/[method:creaCartaConValorMaximoPermitido()]</span></span> changed conditional boundary &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>&#60;init&#62;<br/><b>Killed by : </b>com.pelusas.backend.domain.CartaTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.CartaTest]/[method:creaCartaConValorMinimoPermitido()]</span></span> changed conditional boundary &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>&#60;init&#62;<br/><b>Killed by : </b>com.pelusas.backend.domain.CartaTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.CartaTest]/[method:creaCartaConValorMaximoPermitido()]</span></span> negated conditional &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>&#60;init&#62;<br/><b>Killed by : </b>com.pelusas.backend.domain.CartaTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.CartaTest]/[method:creaCartaConValorMaximoPermitido()]</span></span> negated conditional &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+
+<li class='mutator'>CONDITIONALS_BOUNDARY</li>
+
+<li class='mutator'>EMPTY_RETURNS</li>
+
+<li class='mutator'>FALSE_RETURNS</li>
+
+<li class='mutator'>INCREMENTS</li>
+
+<li class='mutator'>INVERT_NEGS</li>
+
+<li class='mutator'>MATH</li>
+
+<li class='mutator'>NEGATE_CONDITIONALS</li>
+
+<li class='mutator'>NULL_RETURNS</li>
+
+<li class='mutator'>PRIMITIVE_RETURNS</li>
+
+<li class='mutator'>TRUE_RETURNS</li>
+
+<li class='mutator'>VOID_METHOD_CALLS</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>com.pelusas.backend.domain.CartaTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.CartaTest]/[method:creaCartaConValorMaximoPermitido()] (0 ms)</li><li>com.pelusas.backend.domain.CartaTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.CartaTest]/[method:creaCartaConValorMinimoPermitido()] (0 ms)</li><li>com.pelusas.backend.domain.CartaTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.CartaTest]/[method:dosCartasMismoValorSonIguales()] (0 ms)</li><li>com.pelusas.backend.domain.CartaTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.CartaTest]/[method:rechazaValorOnce()] (0 ms)</li><li>com.pelusas.backend.domain.MazoTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.MazoTest]/[method:elMazoNoDependeDeLaListaOriginal()] (0 ms)</li><li>com.pelusas.backend.domain.PartidaTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.PartidaTest]/[method:rechazaNombresRepetidos()] (0 ms)</li><li>com.pelusas.backend.domain.MazoTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.MazoTest]/[method:estaVacioEsFalsoConCartasYVerdaderoSinCartas()] (0 ms)</li><li>com.pelusas.backend.domain.JugadorTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.JugadorTest]/[method:elMontonDevueltoNoSePuedeModificar()] (0 ms)</li><li>com.pelusas.backend.domain.JugadorTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.JugadorTest]/[method:cartasDelanteSeMuestranAgrupadasPorValor()] (0 ms)</li><li>com.pelusas.backend.domain.PartidaTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.PartidaTest]/[method:rechazaMenosDeDosJugadores()] (0 ms)</li><li>com.pelusas.backend.domain.MazoTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.MazoTest]/[method:sacarCartaDevuelveLaPrimeraYReduceElMazoEnUna()] (0 ms)</li><li>com.pelusas.backend.service.MazoFijoFactoryTest.[engine:junit-jupiter]/[class:com.pelusas.backend.service.MazoFijoFactoryTest]/[method:creaUnMazoConLaSecuenciaFijaDePruebas()] (0 ms)</li><li>com.pelusas.backend.domain.MazoTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.MazoTest]/[method:mazoEstandarTiene110Cartas()] (0 ms)</li><li>com.pelusas.backend.domain.MazoTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.MazoTest]/[method:mazoEstandarTiene13CartasDeCadaValorDel1Al5()] (0 ms)</li><li>com.pelusas.backend.domain.JugadorTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.JugadorTest]/[method:unJugadorNoPuedeRobarseASiMismo()] (0 ms)</li><li>com.pelusas.backend.service.MazoFijoFactoryTest.[engine:junit-jupiter]/[class:com.pelusas.backend.service.MazoFijoFactoryTest]/[method:cadaMazoCreadoEsIndependienteDelOtro()] (0 ms)</li><li>com.pelusas.backend.domain.MazoTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.MazoTest]/[method:mazoEstandarTiene9CartasDeCadaValorDel6Al10()] (0 ms)</li><li>com.pelusas.backend.domain.JugadorTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.JugadorTest]/[method:sinCartasDelanteNoPierde()] (0 ms)</li><li>com.pelusas.backend.domain.JugadorTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.JugadorTest]/[method:quitarCartasDelanteDevuelveLaCantidadYQuitaSoloEseGrupo()] (0 ms)</li><li>com.pelusas.backend.domain.JugadorTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.JugadorTest]/[method:cartaNoRepetidaNoPierdeAunqueTengaTresOMasCartas()] (0 ms)</li><li>com.pelusas.backend.domain.JugadorTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.JugadorTest]/[method:descartarNoSumaPuntos()] (0 ms)</li><li>com.pelusas.backend.domain.JugadorTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.JugadorTest]/[method:cartasDelanteDevuelveUnaCopiaQueNoAlteraAlJugador()] (0 ms)</li><li>com.pelusas.backend.domain.JugadorTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.JugadorTest]/[method:cantidadEnMontonNoCuentaLasCartasQueEstanDelante()] (0 ms)</li><li>com.pelusas.backend.domain.JugadorTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.JugadorTest]/[method:repetirConUnaSolaCartaDelanteNoPierde()] (0 ms)</li><li>com.pelusas.backend.domain.JugadorTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.JugadorTest]/[method:repetirConExactamenteTresCartasDelantePierde()] (0 ms)</li><li>com.pelusas.backend.service.MazoAleatorioFactoryTest.[engine:junit-jupiter]/[class:com.pelusas.backend.service.MazoAleatorioFactoryTest]/[method:creaUnMazoEstandarDe110Cartas()] (0 ms)</li><li>com.pelusas.backend.domain.JugadorTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.JugadorTest]/[method:repetirConDosCartasDelanteNoPierde()] (0 ms)</li><li>com.pelusas.backend.domain.MazoTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.MazoTest]/[method:mezclarConservaLas110CartasYSuDistribucion()] (0 ms)</li><li>com.pelusas.backend.domain.JugadorTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.JugadorTest]/[method:robarUnValorQueElOtroNoTieneNoCambiaNada()] (0 ms)</li><li>com.pelusas.backend.domain.PartidaTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.PartidaTest]/[method:robarSinHaberSacadoLanzaExcepcion()] (0 ms)</li><li>com.pelusas.backend.domain.MazoTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.MazoTest]/[method:mezclarConLaMismaSemillaProduceElMismoOrden()] (0 ms)</li><li>com.pelusas.backend.domain.PartidaTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.PartidaTest]/[method:finalizarTurnoSinSacarLanzaExcepcion()] (0 ms)</li><li>com.pelusas.backend.service.MazoAleatorioFactoryTest.[engine:junit-jupiter]/[class:com.pelusas.backend.service.MazoAleatorioFactoryTest]/[method:elMazoCreadoVienemezclado()] (0 ms)</li><li>com.pelusas.backend.domain.JugadorTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.JugadorTest]/[method:repetirConMasDeTresCartasDelantePierde()] (0 ms)</li><li>com.pelusas.backend.domain.MazoTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.MazoTest]/[method:mezclarCambiaElOrdenOriginal()] (0 ms)</li><li>com.pelusas.backend.domain.JugadorTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.JugadorTest]/[method:descartarVaciaLasCartasDelante()] (0 ms)</li><li>com.pelusas.backend.domain.JugadorTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.JugadorTest]/[method:quitarUnValorQueNoTieneDevuelveCero()] (0 ms)</li><li>com.pelusas.backend.domain.JugadorTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.JugadorTest]/[method:recibirCartasLasAgrupaPorValor()] (0 ms)</li><li>com.pelusas.backend.service.PartidaServiceTest.[engine:junit-jupiter]/[class:com.pelusas.backend.service.PartidaServiceTest]/[method:crearPartidaConUnSoloJugadorLanzaExcepcion()] (1 ms)</li><li>com.pelusas.backend.domain.JugadorTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.JugadorTest]/[method:guardarVariasVecesAcumulaEnElMonton()] (0 ms)</li><li>com.pelusas.backend.domain.JugadorTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.JugadorTest]/[method:robarCartasLasPasaDelanteDelJugadorActual()] (0 ms)</li><li>com.pelusas.backend.domain.PartidaTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.PartidaTest]/[method:laPartidaNuevaEmpiezaConElPrimerJugador()] (0 ms)</li><li>com.pelusas.backend.domain.JugadorTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.JugadorTest]/[method:cantidadEnMontonCuentaSoloLasCartasDeEseValor()] (0 ms)</li><li>com.pelusas.backend.domain.JugadorTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.JugadorTest]/[method:guardarCartasDelanteLasMueveAlMontonYLasQuitaDeDelante()] (0 ms)</li><li>com.pelusas.backend.domain.PartidaTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.PartidaTest]/[method:cartaNoRepetidaNoPierdeAunqueTengaTresCartas()] (0 ms)</li><li>com.pelusas.backend.domain.DesempateTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.DesempateTest]/[method:siEmpatanEnValor1DecideElValor2()] (0 ms)</li><li>com.pelusas.backend.domain.PartidaTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.PartidaTest]/[method:guardarCartasDespuesDeSacarLanzaExcepcion()] (0 ms)</li><li>com.pelusas.backend.domain.DesempateTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.DesempateTest]/[method:ganaQuienTieneMasCartasDeValor1()] (0 ms)</li><li>com.pelusas.backend.domain.PartidaTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.PartidaTest]/[method:sacarCartaLaPoneDelanteDelJugadorActual()] (0 ms)</li><li>com.pelusas.backend.domain.DesempateTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.DesempateTest]/[method:unEmpateDeTresSeReduceProgresivamente()] (0 ms)</li><li>com.pelusas.backend.domain.DesempateTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.DesempateTest]/[method:elValor10SeComparaAlFinal()] (0 ms)</li><li>com.pelusas.backend.domain.DesempateTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.DesempateTest]/[method:losValoresMasBajosTienenPrioridad()] (0 ms)</li><li>com.pelusas.backend.domain.PartidaTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.PartidaTest]/[method:finalizarTurnoPasaAlSiguienteYConservaLasCartasDelante()] (0 ms)</li><li>com.pelusas.backend.domain.PartidaTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.PartidaTest]/[method:sacarVariasCartasAcumulaEnElMismoTurno()] (0 ms)</li><li>com.pelusas.backend.domain.PartidaTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.PartidaTest]/[method:despuesDeDarLaVueltaTodosLosJugadoresElTurnoVuelveAlPrimero()] (0 ms)</li><li>com.pelusas.backend.domain.PartidaTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.PartidaTest]/[method:repetirConMenosDeTresCartasNoPierde()] (0 ms)</li><li>com.pelusas.backend.domain.DesempateTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.DesempateTest]/[method:siEmpatanEnTodosLosValoresSeMantienenTodos()] (0 ms)</li><li>com.pelusas.backend.domain.PartidaTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.PartidaTest]/[method:sacarCartaRegistraLaUltimaCartaSacadaAunqueHagaPerderElTurno()] (0 ms)</li><li>com.pelusas.backend.domain.PartidaTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.PartidaTest]/[method:robarDeUnJugadorInexistenteLanzaExcepcion()] (0 ms)</li><li>com.pelusas.backend.domain.PartidaTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.PartidaTest]/[method:repetirConMasDeTresCartasPierdeElTurno()] (0 ms)</li><li>com.pelusas.backend.domain.PartidaTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.PartidaTest]/[method:unJugadorNoPuedeRobarseASiMismo()] (0 ms)</li><li>com.pelusas.backend.domain.PartidaTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.PartidaTest]/[method:repetirConExactamenteTresCartasPierdeElTurno()] (0 ms)</li><li>com.pelusas.backend.service.PartidaServiceTest.[engine:junit-jupiter]/[class:com.pelusas.backend.service.PartidaServiceTest]/[method:cadaPartidaCreadaRecibeUnIdDistinto()] (0 ms)</li><li>com.pelusas.backend.service.PartidaServiceTest.[engine:junit-jupiter]/[class:com.pelusas.backend.service.PartidaServiceTest]/[method:crearPartidaDevuelveElEstadoInicial()] (0 ms)</li><li>com.pelusas.backend.service.PartidaServiceTest.[engine:junit-jupiter]/[class:com.pelusas.backend.service.PartidaServiceTest]/[method:pedirElResultadoDeUnaPartidaEnCursoLanzaExcepcion()] (0 ms)</li><li>com.pelusas.backend.domain.PartidaTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.PartidaTest]/[method:robarUnValorQueLaVictimaNoTieneLanzaExcepcion()] (0 ms)</li><li>com.pelusas.backend.domain.PartidaTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.PartidaTest]/[method:robarPasaLasCartasDelMismoValorAlJugadorActual()] (0 ms)</li><li>com.pelusas.backend.service.PartidaServiceTest.[engine:junit-jupiter]/[class:com.pelusas.backend.service.PartidaServiceTest]/[method:sacarCartaDeUnJugadorSinTurnoLanzaExcepcion()] (0 ms)</li><li>com.pelusas.backend.domain.PartidaTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.PartidaTest]/[method:guardarCartasAntesDeSacarLasMueveAlMonton()] (0 ms)</li><li>com.pelusas.backend.controller.PartidaControllerTest.[engine:junit-jupiter]/[class:com.pelusas.backend.controller.PartidaControllerTest]/[method:crearConNombresRepetidosDevuelve400()] (8 ms)</li><li>com.pelusas.backend.domain.PartidaTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.PartidaTest]/[method:perderElTurnoConLaUltimaCartaTambienTerminaLaPartida()] (0 ms)</li><li>com.pelusas.backend.domain.PartidaTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.PartidaTest]/[method:despuesDeTerminarNoSePuedeActuar()] (0 ms)</li><li>com.pelusas.backend.domain.PartidaTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.PartidaTest]/[method:siSiguenEmpatadosComparteLaVictoria()] (0 ms)</li><li>com.pelusas.backend.domain.PartidaTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.PartidaTest]/[method:ganaElJugadorConMayorPuntuacion()] (0 ms)</li><li>com.pelusas.backend.controller.PartidaControllerTest.[engine:junit-jupiter]/[class:com.pelusas.backend.controller.PartidaControllerTest]/[method:pedirElResultadoDeUnaPartidaEnCursoDevuelve409()] (3 ms)</li><li>com.pelusas.backend.controller.PartidaControllerTest.[engine:junit-jupiter]/[class:com.pelusas.backend.controller.PartidaControllerTest]/[method:consultarLosJugadoresDevuelve200()] (4 ms)</li><li>com.pelusas.backend.domain.PartidaTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.PartidaTest]/[method:sacarLaUltimaCartaTerminaLaPartidaYGuardaLasCartas()] (0 ms)</li><li>com.pelusas.backend.service.PartidaServiceTest.[engine:junit-jupiter]/[class:com.pelusas.backend.service.PartidaServiceTest]/[method:terminarTurnoPasaAlSiguienteYConservaLasCartas()] (0 ms)</li><li>com.pelusas.backend.controller.PartidaControllerTest.[engine:junit-jupiter]/[class:com.pelusas.backend.controller.PartidaControllerTest]/[method:consultarUnaPartidaDevuelve200()] (5 ms)</li><li>com.pelusas.backend.domain.PartidaTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.PartidaTest]/[method:elEmpateSeDesempataPorMayorCantidadDeCartasDeValor1()] (0 ms)</li><li>com.pelusas.backend.domain.PartidaTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.PartidaTest]/[method:siEmpatanEnElValor1SeComparaElValor2()] (0 ms)</li><li>com.pelusas.backend.service.PartidaServiceTest.[engine:junit-jupiter]/[class:com.pelusas.backend.service.PartidaServiceTest]/[method:sacarCartaPonePelusaDelanteDelJugadorYContinua()] (0 ms)</li><li>com.pelusas.backend.service.PartidaServiceTest.[engine:junit-jupiter]/[class:com.pelusas.backend.service.PartidaServiceTest]/[method:repetirConTresCartasPierdeElTurnoYPasaAlSiguiente()] (0 ms)</li><li>com.pelusas.backend.controller.PartidaControllerTest.[engine:junit-jupiter]/[class:com.pelusas.backend.controller.PartidaControllerTest]/[method:terminarTurnoSinHaberSacadoDevuelve409()] (4 ms)</li><li>com.pelusas.backend.service.PartidaServiceTest.[engine:junit-jupiter]/[class:com.pelusas.backend.service.PartidaServiceTest]/[method:robarPasaLasCartasDelMismoValorAlJugadorActual()] (0 ms)</li><li>com.pelusas.backend.service.PartidaServiceTest.[engine:junit-jupiter]/[class:com.pelusas.backend.service.PartidaServiceTest]/[method:guardarCartasMueveLasPelusasAlMonton()] (0 ms)</li><li>com.pelusas.backend.controller.PartidaControllerTest.[engine:junit-jupiter]/[class:com.pelusas.backend.controller.PartidaControllerTest]/[method:crearPartidaDevuelve201ConElEstadoInicial()] (13 ms)</li><li>com.pelusas.backend.controller.PartidaControllerTest.[engine:junit-jupiter]/[class:com.pelusas.backend.controller.PartidaControllerTest]/[method:guardarCartasDespuesDeSacarDevuelve409()] (5 ms)</li><li>com.pelusas.backend.controller.PartidaControllerTest.[engine:junit-jupiter]/[class:com.pelusas.backend.controller.PartidaControllerTest]/[method:terminarTurnoPasaAlSiguienteYConservaLasCartas()] (6 ms)</li><li>com.pelusas.backend.controller.PartidaControllerTest.[engine:junit-jupiter]/[class:com.pelusas.backend.controller.PartidaControllerTest]/[method:robarDeUnJugadorInexistenteDevuelve400()] (5 ms)</li><li>com.pelusas.backend.controller.PartidaControllerTest.[engine:junit-jupiter]/[class:com.pelusas.backend.controller.PartidaControllerTest]/[method:robarSinIndicarLaVictimaDevuelve400()] (7 ms)</li><li>com.pelusas.backend.controller.PartidaControllerTest.[engine:junit-jupiter]/[class:com.pelusas.backend.controller.PartidaControllerTest]/[method:sacarCartaCambiaElEstadoDeLaPartida()] (9 ms)</li><li>com.pelusas.backend.controller.PartidaControllerTest.[engine:junit-jupiter]/[class:com.pelusas.backend.controller.PartidaControllerTest]/[method:robarPasaLasCartasDelMismoValorAlJugadorActual()] (8 ms)</li><li>com.pelusas.backend.controller.PartidaControllerTest.[engine:junit-jupiter]/[class:com.pelusas.backend.controller.PartidaControllerTest]/[method:guardarCartasAlInicioDelTurnoLasMueveAlMonton()] (8 ms)</li><li>com.pelusas.backend.controller.PartidaControllerTest.[engine:junit-jupiter]/[class:com.pelusas.backend.controller.PartidaControllerTest]/[method:sacarCartaFueraDeTurnoDevuelve409()] (17 ms)</li><li>com.pelusas.backend.controller.PartidaControllerTest.[engine:junit-jupiter]/[class:com.pelusas.backend.controller.PartidaControllerTest]/[method:repetirConTresCartasPierdeElTurnoYPasaAlSiguiente()] (11 ms)</li><li>com.pelusas.backend.controller.PartidaControllerTest.[engine:junit-jupiter]/[class:com.pelusas.backend.controller.PartidaControllerTest]/[method:robarUnValorQueLaVictimaNoTieneDevuelve409()] (7 ms)</li><li>com.pelusas.backend.service.PartidaServiceTest.[engine:junit-jupiter]/[class:com.pelusas.backend.service.PartidaServiceTest]/[method:alTerminarLaPartidaSeGuardaUnaSolaVezEnElHistorial()] (4 ms)</li><li>com.pelusas.backend.controller.PartidaControllerTest.[engine:junit-jupiter]/[class:com.pelusas.backend.controller.PartidaControllerTest]/[method:actuarDespuesDeTerminarLaPartidaDevuelve409()] (8 ms)</li><li>com.pelusas.backend.controller.PartidaControllerTest.[engine:junit-jupiter]/[class:com.pelusas.backend.controller.PartidaControllerTest]/[method:alTerminarLaPartidaSeConsultaElResultadoYSeGuardaEnElHistorial()] (135 ms)</li><li>com.pelusas.backend.service.PartidaServiceTest.[engine:junit-jupiter]/[class:com.pelusas.backend.service.PartidaServiceTest]/[method:jugadoresDevuelveLosJugadoresDeLaPartida()] (164 ms)</li><li>com.pelusas.backend.controller.PartidaControllerTest.[engine:junit-jupiter]/[class:com.pelusas.backend.controller.PartidaControllerTest]/[method:sacarCartaSinNombreDeJugadorDevuelve400()] (193 ms)</li><li>com.pelusas.backend.domain.CartaTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.CartaTest]/[method:rechazaValorNegativo()] (0 ms)</li><li>com.pelusas.backend.domain.CartaTest.[engine:junit-jupiter]/[class:com.pelusas.backend.domain.CartaTest]/[method:rechazaValorCero()] (0 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='https://pitest.org'>PIT</a> 1.25.9 <a href='https://github.com/sponsors/hcoles'>support</a>
+
+</body>
+</html>

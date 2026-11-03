@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Partida.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report"></a> &gt; <a href="index.source.html" class="el_package">com.pelusas.backend.domain</a> &gt; <span class="el_source">Partida.java</span></div><h1>Partida.java</h1><pre class="source lang-java linenums">package com.pelusas.backend.domain;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.function.ToIntFunction;
+
+public class Partida {
+
+    public static final int MINIMO_JUGADORES = 2;
+
+<span class="fc" id="L12">    public enum ResultadoSacar { CONTINUA, TURNO_PERDIDO, PARTIDA_TERMINADA }</span>
+
+<span class="fc" id="L14">    private final List&lt;Jugador&gt; jugadores = new ArrayList&lt;&gt;();</span>
+    private final Mazo mazo;
+<span class="fc" id="L16">    private int indiceTurno = 0;</span>
+<span class="fc" id="L17">    private int cartasSacadasEnTurno = 0;</span>
+<span class="fc" id="L18">    private Carta ultimaCarta = null;</span>
+<span class="fc" id="L19">    private Carta ultimaCartaSacada = null;</span>
+<span class="fc" id="L20">    private boolean terminada = false;</span>
+<span class="fc" id="L21">    private List&lt;Jugador&gt; ganadores = List.of();</span>
+
+<span class="fc" id="L23">    public Partida(List&lt;String&gt; nombres, Mazo mazo) {</span>
+<span class="fc bfc" id="L24" title="All 2 branches covered.">        if (nombres.size() &lt; MINIMO_JUGADORES) {</span>
+<span class="fc" id="L25">            throw new IllegalArgumentException(&quot;Se necesitan al menos &quot; + MINIMO_JUGADORES + &quot; jugadores&quot;);</span>
+        }
+<span class="fc bfc" id="L27" title="All 2 branches covered.">        if (new HashSet&lt;&gt;(nombres).size() != nombres.size()) {</span>
+<span class="fc" id="L28">            throw new IllegalArgumentException(&quot;Los nombres de los jugadores no pueden repetirse&quot;);</span>
+        }
+<span class="fc bfc" id="L30" title="All 2 branches covered.">        for (String nombre : nombres) {</span>
+<span class="fc" id="L31">            jugadores.add(new Jugador(nombre));</span>
+<span class="fc" id="L32">        }</span>
+<span class="fc" id="L33">        this.mazo = mazo;</span>
+<span class="fc" id="L34">    }</span>
+
+    public Jugador jugadorActual() {
+<span class="fc" id="L37">        return jugadores.get(indiceTurno);</span>
+    }
+
+<span class="fc" id="L40">    public List&lt;Jugador&gt; jugadores() {return List.copyOf(jugadores);}</span>
+
+    public boolean estaTerminada() {
+<span class="fc" id="L43">        return terminada;</span>
+    }
+
+    public List&lt;Jugador&gt; ganadores() {
+<span class="fc" id="L47">        return List.copyOf(ganadores);</span>
+    }
+
+    public int cartasRestantesEnMazo() {
+<span class="fc" id="L51">        return mazo.cantidadRestante();</span>
+    }
+
+<span class="fc" id="L54">    public Carta ultimaCartaSacada() {return ultimaCartaSacada;}</span>
+
+    public void guardarCartas() {
+<span class="fc" id="L57">        validarEnCurso();</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">        if (cartasSacadasEnTurno &gt; 0) {</span>
+<span class="fc" id="L59">            throw new IllegalStateException(&quot;Solo se pueden guardar cartas antes de sacar en el turno&quot;);</span>
+        }
+<span class="fc" id="L61">        jugadorActual().guardarCartasDelante();</span>
+<span class="fc" id="L62">    }</span>
+
+    public ResultadoSacar sacarCarta() {
+<span class="fc" id="L65">        validarEnCurso();</span>
+<span class="fc" id="L66">        Jugador actual = jugadorActual();</span>
+<span class="fc" id="L67">        Carta carta = mazo.sacarCarta();</span>
+<span class="fc" id="L68">        ultimaCartaSacada = carta;</span>
+        ResultadoSacar resultado;
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        if (actual.provocaPerdida(carta)) {</span>
+<span class="fc" id="L71">            actual.descartarCartasDelante();</span>
+<span class="fc" id="L72">            pasarTurno();</span>
+<span class="fc" id="L73">            resultado = ResultadoSacar.TURNO_PERDIDO;</span>
+        } else {
+<span class="fc" id="L75">            actual.recibirCarta(carta);</span>
+<span class="fc" id="L76">            cartasSacadasEnTurno++;</span>
+<span class="fc" id="L77">            ultimaCarta = carta;</span>
+<span class="fc" id="L78">            resultado = ResultadoSacar.CONTINUA;</span>
+        }
+<span class="fc bfc" id="L80" title="All 2 branches covered.">        if (mazo.estaVacio()) {</span>
+<span class="fc" id="L81">            terminar();</span>
+<span class="fc" id="L82">            return ResultadoSacar.PARTIDA_TERMINADA;</span>
+        }
+<span class="fc" id="L84">        return resultado;</span>
+    }
+
+    public int robarCartas(String nombreVictima) {
+<span class="fc" id="L88">        validarEnCurso();</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">        if (ultimaCarta == null) {</span>
+<span class="fc" id="L90">            throw new IllegalStateException(&quot;Solo se puede robar despues de sacar una carta en el turno&quot;);</span>
+        }
+<span class="fc" id="L92">        Jugador victima = buscarJugador(nombreVictima);</span>
+<span class="fc" id="L93">        int robadas = jugadorActual().robarCartasDe(victima, ultimaCarta.valor());</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">        if (robadas == 0) {</span>
+<span class="fc" id="L95">            throw new IllegalStateException(&quot;El jugador no tiene cartas de ese valor para robar&quot;);</span>
+        }
+<span class="fc" id="L97">        return robadas;</span>
+    }
+
+    public void finalizarTurno() {
+<span class="fc" id="L101">        validarEnCurso();</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">        if (cartasSacadasEnTurno == 0) {</span>
+<span class="fc" id="L103">            throw new IllegalStateException(&quot;Debes sacar al menos una carta antes de terminar el turno&quot;);</span>
+        }
+<span class="fc" id="L105">        pasarTurno();</span>
+<span class="fc" id="L106">    }</span>
+
+    private void validarEnCurso() {
+<span class="fc bfc" id="L109" title="All 2 branches covered.">        if (terminada) {</span>
+<span class="fc" id="L110">            throw new IllegalStateException(&quot;La partida ya termino&quot;);</span>
+        }
+<span class="fc" id="L112">    }</span>
+
+    private void pasarTurno() {
+<span class="fc" id="L115">        indiceTurno = (indiceTurno + 1) % jugadores.size();</span>
+<span class="fc" id="L116">        cartasSacadasEnTurno = 0;</span>
+<span class="fc" id="L117">        ultimaCarta = null;</span>
+<span class="fc" id="L118">    }</span>
+
+    private Jugador buscarJugador(String nombre) {
+<span class="fc bfc" id="L121" title="All 2 branches covered.">        for (Jugador jugador : jugadores) {</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">            if (jugador.nombre().equals(nombre)) {</span>
+<span class="fc" id="L123">                return jugador;</span>
+            }
+<span class="fc" id="L125">        }</span>
+<span class="fc" id="L126">        throw new IllegalArgumentException(&quot;No existe el jugador: &quot; + nombre);</span>
+    }
+
+    private void terminar() {
+<span class="fc" id="L130">        terminada = true;</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">        for (Jugador jugador : jugadores) {</span>
+<span class="fc" id="L132">            jugador.guardarCartasDelante();</span>
+<span class="fc" id="L133">        }</span>
+<span class="fc" id="L134">        ganadores = calcularGanadores();</span>
+<span class="fc" id="L135">    }</span>
+
+    private List&lt;Jugador&gt; calcularGanadores() {
+<span class="fc" id="L138">        return desempatar(conMejorValor(jugadores, Jugador::puntuacion));</span>
+    }
+
+    static List&lt;Jugador&gt; desempatar(List&lt;Jugador&gt; empatados) {
+<span class="fc" id="L142">        List&lt;Jugador&gt; candidatos = empatados;</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">        for (int valor = Carta.VALOR_MINIMO; valor &lt;= Carta.VALOR_MAXIMO; valor++) {</span>
+<span class="fc" id="L144">            int valorActual = valor;</span>
+<span class="fc" id="L145">            candidatos = conMejorValor(candidatos, jugador -&gt; jugador.cantidadEnMonton(valorActual));</span>
+        }
+<span class="fc" id="L147">        return candidatos;</span>
+    }
+
+    private static List&lt;Jugador&gt; conMejorValor(List&lt;Jugador&gt; lista, ToIntFunction&lt;Jugador&gt; criterio) {
+<span class="fc" id="L151">        int mejor = Integer.MIN_VALUE;</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">        for (Jugador jugador : lista) {</span>
+<span class="fc" id="L153">            mejor = Math.max(mejor, criterio.applyAsInt(jugador));</span>
+<span class="fc" id="L154">        }</span>
+<span class="fc" id="L155">        List&lt;Jugador&gt; resultado = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">        for (Jugador jugador : lista) {</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">            if (criterio.applyAsInt(jugador) == mejor) {</span>
+<span class="fc" id="L158">                resultado.add(jugador);</span>
+            }
+<span class="fc" id="L160">        }</span>
+<span class="fc" id="L161">        return resultado;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

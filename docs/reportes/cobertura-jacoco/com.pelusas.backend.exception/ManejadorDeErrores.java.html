@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ManejadorDeErrores.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report"></a> &gt; <a href="index.source.html" class="el_package">com.pelusas.backend.exception</a> &gt; <span class="el_source">ManejadorDeErrores.java</span></div><h1>ManejadorDeErrores.java</h1><pre class="source lang-java linenums">package com.pelusas.backend.exception;
+
+import com.pelusas.backend.dto.ErrorDto;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.stream.Collectors;
+
+@RestControllerAdvice
+<span class="fc" id="L14">public class ManejadorDeErrores {</span>
+
+    @ExceptionHandler(PartidaNoEncontradaException.class)
+    public ResponseEntity&lt;ErrorDto&gt; noEncontrada(PartidaNoEncontradaException ex) {
+<span class="fc" id="L18">        return respuesta(HttpStatus.NOT_FOUND, ex.getMessage());</span>
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity&lt;ErrorDto&gt; argumentoInvalido(IllegalArgumentException ex) {
+<span class="fc" id="L23">        return respuesta(HttpStatus.BAD_REQUEST, ex.getMessage());</span>
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity&lt;ErrorDto&gt; jsonIlegible(HttpMessageNotReadableException ex) {
+<span class="fc" id="L28">        return respuesta(HttpStatus.BAD_REQUEST, &quot;El cuerpo de la solicitud no es un JSON valido&quot;);</span>
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity&lt;ErrorDto&gt; validacion(MethodArgumentNotValidException ex) {
+<span class="fc" id="L33">        String detalle = ex.getBindingResult().getFieldErrors().stream()</span>
+<span class="fc" id="L34">                .map(error -&gt; error.getField() + &quot; &quot; + error.getDefaultMessage())</span>
+<span class="fc" id="L35">                .collect(Collectors.joining(&quot;; &quot;));</span>
+<span class="fc" id="L36">        return respuesta(HttpStatus.BAD_REQUEST, &quot;Solicitud invalida: &quot; + detalle);</span>
+    }
+
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity&lt;ErrorDto&gt; estadoInvalido(IllegalStateException ex) {
+<span class="fc" id="L41">        return respuesta(HttpStatus.CONFLICT, ex.getMessage());</span>
+    }
+
+    private static ResponseEntity&lt;ErrorDto&gt; respuesta(HttpStatus estado, String mensaje) {
+<span class="fc" id="L45">        return ResponseEntity.status(estado).body(new ErrorDto(estado.value(), mensaje));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

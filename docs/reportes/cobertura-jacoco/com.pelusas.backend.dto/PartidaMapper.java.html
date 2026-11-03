@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PartidaMapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report"></a> &gt; <a href="index.source.html" class="el_package">com.pelusas.backend.dto</a> &gt; <span class="el_source">PartidaMapper.java</span></div><h1>PartidaMapper.java</h1><pre class="source lang-java linenums">package com.pelusas.backend.dto;
+
+import com.pelusas.backend.domain.Jugador;
+import com.pelusas.backend.domain.Partida;
+import com.pelusas.backend.entity.PartidaEntity;
+import com.pelusas.backend.entity.ResultadoJugadorEntity;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public final class PartidaMapper {
+
+    private PartidaMapper() {
+    }
+
+    public static PartidaDto partida(long id, Partida partida) {
+<span class="fc" id="L18">        List&lt;JugadorDto&gt; jugadores = partida.jugadores().stream()</span>
+<span class="fc" id="L19">                .map(PartidaMapper::jugador)</span>
+<span class="fc" id="L20">                .toList();</span>
+<span class="fc" id="L21">        List&lt;String&gt; ganadores = partida.ganadores().stream()</span>
+<span class="fc" id="L22">                .map(Jugador::nombre)</span>
+<span class="fc" id="L23">                .toList();</span>
+<span class="fc bfc" id="L24" title="All 2 branches covered.">        String turnoDe = partida.estaTerminada() ? null : partida.jugadorActual().nombre();</span>
+<span class="fc" id="L25">        return new PartidaDto(id, partida.estaTerminada(), turnoDe,</span>
+<span class="fc" id="L26">                partida.cartasRestantesEnMazo(), jugadores, ganadores);</span>
+    }
+
+    public static JugadorDto jugador(Jugador jugador) {
+<span class="fc" id="L30">        return new JugadorDto(jugador.nombre(), jugador.cartasDelante(),</span>
+<span class="fc" id="L31">                jugador.montonPuntos().size(), jugador.puntuacion());</span>
+    }
+
+    public static PartidaEntity entidad(Partida partida, LocalDateTime fecha) {
+<span class="fc" id="L35">        PartidaEntity entidad = new PartidaEntity(fecha);</span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">        for (Jugador jugador : partida.jugadores()) {</span>
+<span class="fc" id="L37">            String cartas = jugador.montonPuntos().stream()</span>
+<span class="fc" id="L38">                    .map(carta -&gt; String.valueOf(carta.valor()))</span>
+<span class="fc" id="L39">                    .collect(Collectors.joining(&quot;,&quot;));</span>
+<span class="fc" id="L40">            entidad.agregarJugador(new ResultadoJugadorEntity(jugador.nombre(), cartas,</span>
+<span class="fc" id="L41">                    jugador.puntuacion(), partida.ganadores().contains(jugador)));</span>
+<span class="fc" id="L42">        }</span>
+<span class="fc" id="L43">        return entidad;</span>
+    }
+
+    public static HistorialDto historial(PartidaEntity entidad) {
+<span class="fc" id="L47">        List&lt;JugadorHistorialDto&gt; jugadores = entidad.getJugadores().stream()</span>
+<span class="fc" id="L48">                .map(r -&gt; new JugadorHistorialDto(r.getNombre(), r.getCartas(),</span>
+<span class="fc" id="L49">                        r.getPuntuacion(), r.isGanador()))</span>
+<span class="fc" id="L50">                .toList();</span>
+<span class="fc" id="L51">        return new HistorialDto(entidad.getId(), entidad.getFecha().toString(), jugadores);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

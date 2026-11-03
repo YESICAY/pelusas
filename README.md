@@ -421,4 +421,10 @@ El reporte HTML se encuentra en:
 backend/target/site/jacoco/index.html
 ```
 
-El proyecto configura un requisito del 100 % de cobertura de líneas y ramas, y un mutation score mínimo del 90 %.
+### Reportes de pruebas
+
+Los resultados de las pruebas se encuentran en `docs/reportes/`.
+
+- Cobertura JaCoCo: `docs/reportes/cobertura-jacoco/`
+- Mutación PIT: `docs/reportes/mutacion-pit/`
+- Pruebas funcionales Playwright: `docs/reportes/playwright/`

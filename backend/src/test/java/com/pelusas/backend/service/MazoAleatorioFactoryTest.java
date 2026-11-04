@@ -19,16 +19,40 @@ class MazoAleatorioFactoryTest {
         return valores;
     }
 
-    @Test
-    void creaUnMazoEstandarDe110Cartas() {
-        Mazo mazo = new MazoAleatorioFactory().crear();
-
-        assertEquals(110, mazo.cantidadRestante());
+    private static int contarEnvenenadas(Mazo mazo) {
+        int total = 0;
+        while (!mazo.estaVacio()) {
+            if (mazo.sacarCarta().envenenada()) {
+                total++;
+            }
+        }
+        return total;
     }
 
     @Test
-    void elMazoCreadoVienemezclado() {
-        List<Integer> mezclado = valores(new MazoAleatorioFactory().crear());
+    void conUnaEnvenenadaElMazoTiene111Cartas() {
+        Mazo mazo = new MazoAleatorioFactory(1).crear();
+
+        assertEquals(111, mazo.cantidadRestante());
+        assertEquals(1, contarEnvenenadas(mazo));
+    }
+
+    @Test
+    void sinEnvenenadasElMazoTiene110Cartas() {
+        Mazo mazo = new MazoAleatorioFactory(0).crear();
+
+        assertEquals(110, mazo.cantidadRestante());
+        assertEquals(0, contarEnvenenadas(mazo));
+    }
+
+    @Test
+    void laCantidadDeEnvenenadasEsConfigurable() {
+        assertEquals(3, contarEnvenenadas(new MazoAleatorioFactory(3).crear()));
+    }
+
+    @Test
+    void elMazoCreadoVieneMezclado() {
+        List<Integer> mezclado = valores(new MazoAleatorioFactory(0).crear());
         List<Integer> ordenado = valores(Mazo.estandar());
 
         assertNotEquals(ordenado, mezclado);

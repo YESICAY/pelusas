@@ -9,7 +9,7 @@ public class Partida {
 
     public static final int MINIMO_JUGADORES = 2;
 
-    public enum ResultadoSacar { CONTINUA, TURNO_PERDIDO, PARTIDA_TERMINADA }
+    public enum ResultadoSacar { CONTINUA, TURNO_PERDIDO, PELUSA_ENVENENADA, PARTIDA_TERMINADA }
 
     private final List<Jugador> jugadores = new ArrayList<>();
     private final Mazo mazo;
@@ -67,7 +67,11 @@ public class Partida {
         Carta carta = mazo.sacarCarta();
         ultimaCartaSacada = carta;
         ResultadoSacar resultado;
-        if (actual.provocaPerdida(carta)) {
+        if (carta.envenenada()) {
+            actual.descartarCartasDelante();
+            pasarTurno();
+            resultado = ResultadoSacar.PELUSA_ENVENENADA;
+        } else if (actual.provocaPerdida(carta)) {
             actual.descartarCartasDelante();
             pasarTurno();
             resultado = ResultadoSacar.TURNO_PERDIDO;

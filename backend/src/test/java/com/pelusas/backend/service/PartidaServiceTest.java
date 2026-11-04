@@ -50,7 +50,7 @@ class PartidaServiceTest {
     private PartidaDto crearConMazo(int... valores) {
         List<Carta> cartas = new ArrayList<>();
         for (int valor : valores) {
-            cartas.add(new Carta(valor));
+            cartas.add(valor == 0 ? Carta.pelusaEnvenenada() : new Carta(valor));
         }
         when(mazoFactory.crear()).thenReturn(new Mazo(cartas));
         return servicio.crear(List.of("Ana", "Beto"));
@@ -228,5 +228,18 @@ class PartidaServiceTest {
         assertEquals(2L, segunda.id());
         assertEquals(2L, servicio.consultar(2L).id());
         assertEquals("Ana", servicio.consultar(1L).turnoDe());
+    }
+
+    @Test
+    void sacarLaPelusaEnvenenadaPierdeElTurnoYDescartaLasCartasDelante() {
+        crearConMazo(5, 0, 9);
+        servicio.sacarCarta(1L, "Ana");
+
+        SacarCartaDto respuesta = servicio.sacarCarta(1L, "Ana");
+
+        assertEquals("PELUSA_ENVENENADA", respuesta.resultado());
+        assertEquals("Beto", respuesta.partida().turnoDe());
+        assertTrue(respuesta.partida().jugadores().get(0).cartasDelante().isEmpty());
+        assertEquals(0, respuesta.partida().jugadores().get(0).puntuacion());
     }
 }

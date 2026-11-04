@@ -30,6 +30,17 @@ public class Mazo {
         return new Mazo(cartas);
     }
 
+    public static Mazo estandarConEnvenenadas(int cantidadEnvenenadas) {
+        if (cantidadEnvenenadas < 0) {
+            throw new IllegalArgumentException("La cantidad de pelusas envenenadas no puede ser negativa");
+        }
+        Mazo mazo = estandar();
+        for (int i = 0; i < cantidadEnvenenadas; i++) {
+            mazo.cartas.add(Carta.pelusaEnvenenada());
+        }
+        return mazo;
+    }
+
     public void mezclar(Random random){
         Collections.shuffle(cartas, random);
     }

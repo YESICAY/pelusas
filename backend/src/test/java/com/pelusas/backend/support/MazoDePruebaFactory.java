@@ -14,7 +14,7 @@ public class MazoDePruebaFactory implements MazoFactory {
     public void definir(int... valores) {
         List<Carta> nuevas = new ArrayList<>();
         for (int valor : valores) {
-            nuevas.add(new Carta(valor));
+            nuevas.add(valor == 0 ? Carta.pelusaEnvenenada() : new Carta(valor));
         }
         this.cartas = nuevas;
     }

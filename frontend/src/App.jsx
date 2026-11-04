@@ -6,6 +6,7 @@ const MENSAJES = {
   CONTINUA: 'Sacaste una carta. Puedes seguir sacando o terminar tu turno.',
   TURNO_PERDIDO: 'Perdiste el turno: tus cartas fueron descartadas.',
   PARTIDA_TERMINADA: 'Se acabaron las cartas: la partida terminó.',
+  PELUSA_ENVENENADA: 'Sacaste una pelusa envenenada. Perdiste el turno: tus cartas fueron descartadas.',
 }
 
 const MAX_JUGADORES = 6
@@ -28,6 +29,16 @@ function Reverso({ pequena = false }) {
   return (
     <div className={pequena ? 'carta reverso pequena' : 'carta reverso'} aria-hidden="true">
       <span>P</span>
+    </div>
+  )
+}
+
+function CartaEnvenenada() {
+  return (
+    <div className="carta envenenada" aria-label="Pelusa envenenada">
+      <span className="esquina arriba" aria-hidden="true">☠</span>
+      <span className="centro" aria-hidden="true">☠</span>
+      <span className="esquina abajo" aria-hidden="true">☠</span>
     </div>
   )
 }
@@ -168,7 +179,8 @@ function Tablero({ partida, ultima, efecto, ocupado, onGuardar, onSacar, onTermi
     ? victima
     : (otros[0]?.nombre ?? '')
   const deshabilitado = partida.terminada || ocupado
-  const perdida = ultima?.resultado === 'TURNO_PERDIDO'
+  const envenenada = ultima?.resultado === 'PELUSA_ENVENENADA'
+  const perdida = ultima?.resultado === 'TURNO_PERDIDO' || envenenada
 
   return (
     <section className="tablero">
@@ -194,13 +206,13 @@ function Tablero({ partida, ultima, efecto, ocupado, onGuardar, onSacar, onTermi
           <span className="subtitulo">Última carta</span>
           {ultima ? (
             <div key={ultima.id} className={perdida ? 'revelada mala' : 'revelada'}>
-              <Carta valor={ultima.valor} />
+              {envenenada ? <CartaEnvenenada /> : <Carta valor={ultima.valor} />}
             </div>
           ) : (
             <div className="hueco">—</div>
           )}
           <span className={perdida ? 'etiqueta-ultima mala' : 'etiqueta-ultima'}>
-            {perdida ? '¡Repetida! Pierdes el turno' : ''}
+            {envenenada ? '¡Pelusa envenenada! Pierdes el turno' : perdida ? '¡Repetida! Pierdes el turno' : ''}
           </span>
         </div>
       </div>
@@ -375,6 +387,12 @@ export default function App() {
           registrar(
             `${MENSAJES.TURNO_PERDIDO} Ahora juega ${siguiente}.`,
             `${quien} sacó un ${respuesta.carta} repetido y perdió el turno.`,
+          )
+          } else if (respuesta.resultado === 'PELUSA_ENVENENADA') {
+          lanzarEfecto(quien, 'perdido')
+          registrar(
+            `${MENSAJES.PELUSA_ENVENENADA} Ahora juega ${siguiente}.`,
+            `${quien} sacó una pelusa envenenada y perdió el turno.`,
           )
         } else {
           registrar(MENSAJES[respuesta.resultado], `${quien} sacó un ${respuesta.carta}.`)

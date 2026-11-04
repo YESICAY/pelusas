@@ -42,9 +42,11 @@ public class Jugador {
     }
 
     public void recibirCarta(Carta carta) {
+        if (carta.envenenada()) {
+            throw new IllegalArgumentException("Una pelusa envenenada no se puede colocar delante");
+        }
         cartasDelante.merge(carta.valor(), 1, Integer::sum);
     }
-
     public void descartarCartasDelante() {
         cartasDelante.clear();
     }

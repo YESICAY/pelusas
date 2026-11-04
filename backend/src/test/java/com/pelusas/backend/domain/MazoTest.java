@@ -124,4 +124,36 @@ class MazoTest {
 
         assertNotEquals(extraerValores(ordenado), extraerValores(mezclado));
     }
+
+    @Test
+    void elMazoConEnvenenadasSumaEsasCartasALas110() {
+        Mazo mazo = Mazo.estandarConEnvenenadas(2);
+
+        assertEquals(112, mazo.cantidadRestante());
+        int envenenadas = 0;
+        int[] conteo = new int[Carta.VALOR_MAXIMO + 1];
+        while (!mazo.estaVacio()) {
+            Carta carta = mazo.sacarCarta();
+            if (carta.envenenada()) {
+                envenenadas++;
+            } else {
+                conteo[carta.valor()]++;
+            }
+        }
+        assertEquals(2, envenenadas);
+        assertEquals(13, conteo[1]);
+        assertEquals(13, conteo[5]);
+        assertEquals(9, conteo[6]);
+        assertEquals(9, conteo[10]);
+    }
+
+    @Test
+    void sinEnvenenadasElMazoEsElEstandarDe110() {
+        assertEquals(110, Mazo.estandarConEnvenenadas(0).cantidadRestante());
+    }
+
+    @Test
+    void laCantidadDeEnvenenadasNoPuedeSerNegativa() {
+        assertThrows(IllegalArgumentException.class, () -> Mazo.estandarConEnvenenadas(-1));
+    }
 }

@@ -234,4 +234,13 @@ class JugadorTest {
 
         assertEquals(0, jugador.cantidadEnMonton(5));
     }
+
+    @Test
+    void unaPelusaEnvenenadaNoPuedeColocarseDelante() {
+        Jugador jugador = new Jugador("Ana");
+
+        assertThrows(IllegalArgumentException.class,
+                () -> jugador.recibirCarta(Carta.pelusaEnvenenada()));
+        assertEquals(0, jugador.totalCartasDelante());
+    }
 }

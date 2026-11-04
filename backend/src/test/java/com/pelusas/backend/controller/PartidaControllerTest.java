@@ -348,4 +348,20 @@ class PartidaControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(0));
     }
+
+    @Test
+    void sacarLaPelusaEnvenenadaHacePerderElTurnoYDescartaLasCartasDelante() throws Exception {
+        long id = crearPartida(5, 0, 9);
+        sacar(id, "Ana").andExpect(status().isOk());
+
+        sacar(id, "Ana")
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.resultado").value("PELUSA_ENVENENADA"))
+                .andExpect(jsonPath("$.partida.turnoDe").value("Beto"))
+                .andExpect(jsonPath("$.partida.jugadores[0].cartasDelante").isEmpty());
+
+        consultar(id)
+                .andExpect(jsonPath("$.turnoDe").value("Beto"))
+                .andExpect(jsonPath("$.jugadores[0].puntuacion").value(0));
+    }
 }

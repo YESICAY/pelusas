@@ -15,7 +15,7 @@ class PartidaTest {
     private static Mazo mazoDe(int... valores) {
         List<Carta> cartas = new ArrayList<>();
         for (int valor : valores) {
-            cartas.add(new Carta(valor));
+            cartas.add(valor == 0 ? Carta.pelusaEnvenenada() : new Carta(valor));
         }
         return new Mazo(cartas);
     }
@@ -338,5 +338,78 @@ class PartidaTest {
         partida.sacarCarta();
 
         assertEquals(new Carta(5), partida.ultimaCartaSacada());
+    }
+
+    @Test
+    void sacarLaPelusaEnvenenadaHacePerderElTurnoAunqueNoHayaCartasDelante() {
+        Partida partida = partida(0, 9);
+
+        Partida.ResultadoSacar resultado = partida.sacarCarta();
+
+        assertEquals(Partida.ResultadoSacar.PELUSA_ENVENENADA, resultado);
+        assertEquals("Beto", partida.jugadorActual().nombre());
+        assertFalse(partida.estaTerminada());
+    }
+
+    @Test
+    void laPelusaEnvenenadaDescartaTodasLasCartasDelanteSinSumarPuntos() {
+        Partida partida = partida(5, 2, 0, 9);
+        Jugador ana = partida.jugadorActual();
+        partida.sacarCarta();
+        partida.sacarCarta();
+
+        Partida.ResultadoSacar resultado = partida.sacarCarta();
+
+        assertEquals(Partida.ResultadoSacar.PELUSA_ENVENENADA, resultado);
+        assertEquals(0, ana.totalCartasDelante());
+        assertEquals(0, ana.puntuacion());
+        assertTrue(ana.montonPuntos().isEmpty());
+        assertEquals("Beto", partida.jugadorActual().nombre());
+    }
+
+    @Test
+    void laPelusaEnvenenadaNoAfectaAlMontonYaGuardado() {
+        Partida partida = partida(5, 9, 2, 0, 9);
+        Jugador ana = partida.jugadorActual();
+        partida.sacarCarta();
+        partida.finalizarTurno();
+        partida.sacarCarta();
+        partida.finalizarTurno();
+        partida.guardarCartas();
+        partida.sacarCarta();
+
+        Partida.ResultadoSacar resultado = partida.sacarCarta();
+
+        assertEquals(Partida.ResultadoSacar.PELUSA_ENVENENADA, resultado);
+        assertEquals(0, ana.totalCartasDelante());
+        assertEquals(5, ana.puntuacion());
+        assertEquals(1, ana.montonPuntos().size());
+    }
+
+    @Test
+    void despuesDeLaPelusaEnvenenadaNoSePuedeRobar() {
+        Partida partida = partida(5, 0, 9);
+        partida.sacarCarta();
+        partida.finalizarTurno();
+        partida.sacarCarta();
+
+        assertThrows(IllegalStateException.class, () -> partida.robarCartas("Beto"));
+    }
+
+    @Test
+    void laPelusaEnvenenadaComoUltimaCartaTerminaLaPartidaSinGuardarLoQueEraDeQuienLaSaco() {
+        Partida partida = partida(5, 0);
+        Jugador ana = partida.jugadorActual();
+        partida.sacarCarta();
+        partida.finalizarTurno();
+        Jugador beto = partida.jugadorActual();
+
+        Partida.ResultadoSacar resultado = partida.sacarCarta();
+
+        assertEquals(Partida.ResultadoSacar.PARTIDA_TERMINADA, resultado);
+        assertTrue(partida.estaTerminada());
+        assertEquals(5, ana.puntuacion());
+        assertEquals(0, beto.puntuacion());
+        assertEquals(List.of(ana), partida.ganadores());
     }
 }

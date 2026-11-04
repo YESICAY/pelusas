@@ -2,6 +2,8 @@ package com.pelusas.backend.domain;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -39,6 +41,24 @@ class CartaTest {
     @Test
     void dosCartasMismoValorSonIguales(){
         assertEquals(new Carta(5), new Carta(5));
+    }
+
+    @Test
+    void laPelusaEnvenenadaEstaMarcadaYNoTieneValor() {
+        Carta carta = Carta.pelusaEnvenenada();
+
+        assertTrue(carta.envenenada());
+        assertEquals(0, carta.valor());
+    }
+
+    @Test
+    void lasCartasNormalesNoSonEnvenenadas() {
+        assertFalse(new Carta(5).envenenada());
+    }
+
+    @Test
+    void unaCartaEnvenenadaNoPuedeTenerValor() {
+        assertThrows(IllegalArgumentException.class, () -> new Carta(5, true));
     }
 
 }

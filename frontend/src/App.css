@@ -603,3 +603,10 @@ input {
     animation: none !important;
   }
 }
+
+.carta.envenenada {
+  --c: #a3e635;
+  border-color: #a3e635;
+  background: linear-gradient(160deg, #3b0764, #12001f);
+  box-shadow: 0 0 14px 3px rgba(163, 230, 53, 0.65);
+}

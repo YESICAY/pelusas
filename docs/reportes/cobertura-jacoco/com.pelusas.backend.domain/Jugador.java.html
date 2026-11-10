@@ -42,62 +42,64 @@ public class Jugador {
     }
 
     public void recibirCarta(Carta carta) {
-<span class="fc" id="L45">        cartasDelante.merge(carta.valor(), 1, Integer::sum);</span>
-<span class="fc" id="L46">    }</span>
-
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        if (carta.envenenada()) {</span>
+<span class="fc" id="L46">            throw new IllegalArgumentException(&quot;Una pelusa envenenada no se puede colocar delante&quot;);</span>
+        }
+<span class="fc" id="L48">        cartasDelante.merge(carta.valor(), 1, Integer::sum);</span>
+<span class="fc" id="L49">    }</span>
     public void descartarCartasDelante() {
-<span class="fc" id="L49">        cartasDelante.clear();</span>
-<span class="fc" id="L50">    }</span>
+<span class="fc" id="L51">        cartasDelante.clear();</span>
+<span class="fc" id="L52">    }</span>
 
     public Map&lt;Integer, Integer&gt; cartasDelante() {
-<span class="fc" id="L53">        return new TreeMap&lt;&gt;(cartasDelante);</span>
+<span class="fc" id="L55">        return new TreeMap&lt;&gt;(cartasDelante);</span>
     }
 
     public void guardarCartasDelante() {
-<span class="fc bfc" id="L57" title="All 2 branches covered.">        for (Map.Entry&lt;Integer, Integer&gt; grupo : cartasDelante.entrySet()) {</span>
-<span class="fc bfc" id="L58" title="All 2 branches covered.">            for (int i = 0; i &lt; grupo.getValue(); i++) {</span>
-<span class="fc" id="L59">                montonPuntos.add(new Carta(grupo.getKey()));</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        for (Map.Entry&lt;Integer, Integer&gt; grupo : cartasDelante.entrySet()) {</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">            for (int i = 0; i &lt; grupo.getValue(); i++) {</span>
+<span class="fc" id="L61">                montonPuntos.add(new Carta(grupo.getKey()));</span>
             }
-<span class="fc" id="L61">        }</span>
-<span class="fc" id="L62">        cartasDelante.clear();</span>
-<span class="fc" id="L63">    }</span>
+<span class="fc" id="L63">        }</span>
+<span class="fc" id="L64">        cartasDelante.clear();</span>
+<span class="fc" id="L65">    }</span>
 
     public int puntuacion() {
-<span class="fc" id="L66">        int total = 0;</span>
-<span class="fc bfc" id="L67" title="All 2 branches covered.">        for (Carta carta : montonPuntos) {</span>
-<span class="fc" id="L68">            total += carta.valor();</span>
-<span class="fc" id="L69">        }</span>
-<span class="fc" id="L70">        return total;</span>
+<span class="fc" id="L68">        int total = 0;</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">        for (Carta carta : montonPuntos) {</span>
+<span class="fc" id="L70">            total += carta.valor();</span>
+<span class="fc" id="L71">        }</span>
+<span class="fc" id="L72">        return total;</span>
     }
 
     public int cantidadEnMonton(int valor) {
-<span class="fc" id="L74">        int cantidad = 0;</span>
-<span class="fc bfc" id="L75" title="All 2 branches covered.">        for (Carta carta : montonPuntos) {</span>
-<span class="fc bfc" id="L76" title="All 2 branches covered.">            if (carta.valor() == valor) {</span>
-<span class="fc" id="L77">                cantidad++;</span>
+<span class="fc" id="L76">        int cantidad = 0;</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        for (Carta carta : montonPuntos) {</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">            if (carta.valor() == valor) {</span>
+<span class="fc" id="L79">                cantidad++;</span>
             }
-<span class="fc" id="L79">        }</span>
-<span class="fc" id="L80">        return cantidad;</span>
+<span class="fc" id="L81">        }</span>
+<span class="fc" id="L82">        return cantidad;</span>
     }
 
     public List&lt;Carta&gt; montonPuntos() {
-<span class="fc" id="L84">        return List.copyOf(montonPuntos);</span>
+<span class="fc" id="L86">        return List.copyOf(montonPuntos);</span>
     }
 
     public int quitarCartasDelante(int valor) {
-<span class="fc" id="L88">        Integer cantidad = cartasDelante.remove(valor);</span>
-<span class="fc bfc" id="L89" title="All 2 branches covered.">        return cantidad == null ? 0 : cantidad;</span>
+<span class="fc" id="L90">        Integer cantidad = cartasDelante.remove(valor);</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">        return cantidad == null ? 0 : cantidad;</span>
     }
 
     public int robarCartasDe(Jugador otro, int valor) {
-<span class="fc bfc" id="L93" title="All 2 branches covered.">        if (otro == this) {</span>
-<span class="fc" id="L94">            throw new IllegalArgumentException(&quot;Un jugador no puede robarse a si mismo&quot;);</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">        if (otro == this) {</span>
+<span class="fc" id="L96">            throw new IllegalArgumentException(&quot;Un jugador no puede robarse a si mismo&quot;);</span>
         }
-<span class="fc" id="L96">        int cantidad = otro.quitarCartasDelante(valor);</span>
-<span class="fc bfc" id="L97" title="All 2 branches covered.">        for (int i = 0; i &lt; cantidad; i++) {</span>
-<span class="fc" id="L98">            recibirCarta(new Carta(valor));</span>
+<span class="fc" id="L98">        int cantidad = otro.quitarCartasDelante(valor);</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">        for (int i = 0; i &lt; cantidad; i++) {</span>
+<span class="fc" id="L100">            recibirCarta(new Carta(valor));</span>
         }
-<span class="fc" id="L100">        return cantidad;</span>
+<span class="fc" id="L102">        return cantidad;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -9,7 +9,7 @@ public class Partida {
 
     public static final int MINIMO_JUGADORES = 2;
 
-<span class="fc" id="L12">    public enum ResultadoSacar { CONTINUA, TURNO_PERDIDO, PARTIDA_TERMINADA }</span>
+<span class="fc" id="L12">    public enum ResultadoSacar { CONTINUA, TURNO_PERDIDO, PELUSA_ENVENENADA, PARTIDA_TERMINADA }</span>
 
 <span class="fc" id="L14">    private final List&lt;Jugador&gt; jugadores = new ArrayList&lt;&gt;();</span>
     private final Mazo mazo;
@@ -67,98 +67,102 @@ public class Partida {
 <span class="fc" id="L67">        Carta carta = mazo.sacarCarta();</span>
 <span class="fc" id="L68">        ultimaCartaSacada = carta;</span>
         ResultadoSacar resultado;
-<span class="fc bfc" id="L70" title="All 2 branches covered.">        if (actual.provocaPerdida(carta)) {</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        if (carta.envenenada()) {</span>
 <span class="fc" id="L71">            actual.descartarCartasDelante();</span>
 <span class="fc" id="L72">            pasarTurno();</span>
-<span class="fc" id="L73">            resultado = ResultadoSacar.TURNO_PERDIDO;</span>
+<span class="fc" id="L73">            resultado = ResultadoSacar.PELUSA_ENVENENADA;</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">        } else if (actual.provocaPerdida(carta)) {</span>
+<span class="fc" id="L75">            actual.descartarCartasDelante();</span>
+<span class="fc" id="L76">            pasarTurno();</span>
+<span class="fc" id="L77">            resultado = ResultadoSacar.TURNO_PERDIDO;</span>
         } else {
-<span class="fc" id="L75">            actual.recibirCarta(carta);</span>
-<span class="fc" id="L76">            cartasSacadasEnTurno++;</span>
-<span class="fc" id="L77">            ultimaCarta = carta;</span>
-<span class="fc" id="L78">            resultado = ResultadoSacar.CONTINUA;</span>
+<span class="fc" id="L79">            actual.recibirCarta(carta);</span>
+<span class="fc" id="L80">            cartasSacadasEnTurno++;</span>
+<span class="fc" id="L81">            ultimaCarta = carta;</span>
+<span class="fc" id="L82">            resultado = ResultadoSacar.CONTINUA;</span>
         }
-<span class="fc bfc" id="L80" title="All 2 branches covered.">        if (mazo.estaVacio()) {</span>
-<span class="fc" id="L81">            terminar();</span>
-<span class="fc" id="L82">            return ResultadoSacar.PARTIDA_TERMINADA;</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        if (mazo.estaVacio()) {</span>
+<span class="fc" id="L85">            terminar();</span>
+<span class="fc" id="L86">            return ResultadoSacar.PARTIDA_TERMINADA;</span>
         }
-<span class="fc" id="L84">        return resultado;</span>
+<span class="fc" id="L88">        return resultado;</span>
     }
 
     public int robarCartas(String nombreVictima) {
-<span class="fc" id="L88">        validarEnCurso();</span>
-<span class="fc bfc" id="L89" title="All 2 branches covered.">        if (ultimaCarta == null) {</span>
-<span class="fc" id="L90">            throw new IllegalStateException(&quot;Solo se puede robar despues de sacar una carta en el turno&quot;);</span>
+<span class="fc" id="L92">        validarEnCurso();</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">        if (ultimaCarta == null) {</span>
+<span class="fc" id="L94">            throw new IllegalStateException(&quot;Solo se puede robar despues de sacar una carta en el turno&quot;);</span>
         }
-<span class="fc" id="L92">        Jugador victima = buscarJugador(nombreVictima);</span>
-<span class="fc" id="L93">        int robadas = jugadorActual().robarCartasDe(victima, ultimaCarta.valor());</span>
-<span class="fc bfc" id="L94" title="All 2 branches covered.">        if (robadas == 0) {</span>
-<span class="fc" id="L95">            throw new IllegalStateException(&quot;El jugador no tiene cartas de ese valor para robar&quot;);</span>
+<span class="fc" id="L96">        Jugador victima = buscarJugador(nombreVictima);</span>
+<span class="fc" id="L97">        int robadas = jugadorActual().robarCartasDe(victima, ultimaCarta.valor());</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">        if (robadas == 0) {</span>
+<span class="fc" id="L99">            throw new IllegalStateException(&quot;El jugador no tiene cartas de ese valor para robar&quot;);</span>
         }
-<span class="fc" id="L97">        return robadas;</span>
+<span class="fc" id="L101">        return robadas;</span>
     }
 
     public void finalizarTurno() {
-<span class="fc" id="L101">        validarEnCurso();</span>
-<span class="fc bfc" id="L102" title="All 2 branches covered.">        if (cartasSacadasEnTurno == 0) {</span>
-<span class="fc" id="L103">            throw new IllegalStateException(&quot;Debes sacar al menos una carta antes de terminar el turno&quot;);</span>
+<span class="fc" id="L105">        validarEnCurso();</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">        if (cartasSacadasEnTurno == 0) {</span>
+<span class="fc" id="L107">            throw new IllegalStateException(&quot;Debes sacar al menos una carta antes de terminar el turno&quot;);</span>
         }
-<span class="fc" id="L105">        pasarTurno();</span>
-<span class="fc" id="L106">    }</span>
+<span class="fc" id="L109">        pasarTurno();</span>
+<span class="fc" id="L110">    }</span>
 
     private void validarEnCurso() {
-<span class="fc bfc" id="L109" title="All 2 branches covered.">        if (terminada) {</span>
-<span class="fc" id="L110">            throw new IllegalStateException(&quot;La partida ya termino&quot;);</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">        if (terminada) {</span>
+<span class="fc" id="L114">            throw new IllegalStateException(&quot;La partida ya termino&quot;);</span>
         }
-<span class="fc" id="L112">    }</span>
+<span class="fc" id="L116">    }</span>
 
     private void pasarTurno() {
-<span class="fc" id="L115">        indiceTurno = (indiceTurno + 1) % jugadores.size();</span>
-<span class="fc" id="L116">        cartasSacadasEnTurno = 0;</span>
-<span class="fc" id="L117">        ultimaCarta = null;</span>
-<span class="fc" id="L118">    }</span>
+<span class="fc" id="L119">        indiceTurno = (indiceTurno + 1) % jugadores.size();</span>
+<span class="fc" id="L120">        cartasSacadasEnTurno = 0;</span>
+<span class="fc" id="L121">        ultimaCarta = null;</span>
+<span class="fc" id="L122">    }</span>
 
     private Jugador buscarJugador(String nombre) {
-<span class="fc bfc" id="L121" title="All 2 branches covered.">        for (Jugador jugador : jugadores) {</span>
-<span class="fc bfc" id="L122" title="All 2 branches covered.">            if (jugador.nombre().equals(nombre)) {</span>
-<span class="fc" id="L123">                return jugador;</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">        for (Jugador jugador : jugadores) {</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">            if (jugador.nombre().equals(nombre)) {</span>
+<span class="fc" id="L127">                return jugador;</span>
             }
-<span class="fc" id="L125">        }</span>
-<span class="fc" id="L126">        throw new IllegalArgumentException(&quot;No existe el jugador: &quot; + nombre);</span>
+<span class="fc" id="L129">        }</span>
+<span class="fc" id="L130">        throw new IllegalArgumentException(&quot;No existe el jugador: &quot; + nombre);</span>
     }
 
     private void terminar() {
-<span class="fc" id="L130">        terminada = true;</span>
-<span class="fc bfc" id="L131" title="All 2 branches covered.">        for (Jugador jugador : jugadores) {</span>
-<span class="fc" id="L132">            jugador.guardarCartasDelante();</span>
-<span class="fc" id="L133">        }</span>
-<span class="fc" id="L134">        ganadores = calcularGanadores();</span>
-<span class="fc" id="L135">    }</span>
+<span class="fc" id="L134">        terminada = true;</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">        for (Jugador jugador : jugadores) {</span>
+<span class="fc" id="L136">            jugador.guardarCartasDelante();</span>
+<span class="fc" id="L137">        }</span>
+<span class="fc" id="L138">        ganadores = calcularGanadores();</span>
+<span class="fc" id="L139">    }</span>
 
     private List&lt;Jugador&gt; calcularGanadores() {
-<span class="fc" id="L138">        return desempatar(conMejorValor(jugadores, Jugador::puntuacion));</span>
+<span class="fc" id="L142">        return desempatar(conMejorValor(jugadores, Jugador::puntuacion));</span>
     }
 
     static List&lt;Jugador&gt; desempatar(List&lt;Jugador&gt; empatados) {
-<span class="fc" id="L142">        List&lt;Jugador&gt; candidatos = empatados;</span>
-<span class="fc bfc" id="L143" title="All 2 branches covered.">        for (int valor = Carta.VALOR_MINIMO; valor &lt;= Carta.VALOR_MAXIMO; valor++) {</span>
-<span class="fc" id="L144">            int valorActual = valor;</span>
-<span class="fc" id="L145">            candidatos = conMejorValor(candidatos, jugador -&gt; jugador.cantidadEnMonton(valorActual));</span>
+<span class="fc" id="L146">        List&lt;Jugador&gt; candidatos = empatados;</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">        for (int valor = Carta.VALOR_MINIMO; valor &lt;= Carta.VALOR_MAXIMO; valor++) {</span>
+<span class="fc" id="L148">            int valorActual = valor;</span>
+<span class="fc" id="L149">            candidatos = conMejorValor(candidatos, jugador -&gt; jugador.cantidadEnMonton(valorActual));</span>
         }
-<span class="fc" id="L147">        return candidatos;</span>
+<span class="fc" id="L151">        return candidatos;</span>
     }
 
     private static List&lt;Jugador&gt; conMejorValor(List&lt;Jugador&gt; lista, ToIntFunction&lt;Jugador&gt; criterio) {
-<span class="fc" id="L151">        int mejor = Integer.MIN_VALUE;</span>
-<span class="fc bfc" id="L152" title="All 2 branches covered.">        for (Jugador jugador : lista) {</span>
-<span class="fc" id="L153">            mejor = Math.max(mejor, criterio.applyAsInt(jugador));</span>
-<span class="fc" id="L154">        }</span>
-<span class="fc" id="L155">        List&lt;Jugador&gt; resultado = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L155">        int mejor = Integer.MIN_VALUE;</span>
 <span class="fc bfc" id="L156" title="All 2 branches covered.">        for (Jugador jugador : lista) {</span>
-<span class="fc bfc" id="L157" title="All 2 branches covered.">            if (criterio.applyAsInt(jugador) == mejor) {</span>
-<span class="fc" id="L158">                resultado.add(jugador);</span>
+<span class="fc" id="L157">            mejor = Math.max(mejor, criterio.applyAsInt(jugador));</span>
+<span class="fc" id="L158">        }</span>
+<span class="fc" id="L159">        List&lt;Jugador&gt; resultado = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">        for (Jugador jugador : lista) {</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">            if (criterio.applyAsInt(jugador) == mejor) {</span>
+<span class="fc" id="L162">                resultado.add(jugador);</span>
             }
-<span class="fc" id="L160">        }</span>
-<span class="fc" id="L161">        return resultado;</span>
+<span class="fc" id="L164">        }</span>
+<span class="fc" id="L165">        return resultado;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

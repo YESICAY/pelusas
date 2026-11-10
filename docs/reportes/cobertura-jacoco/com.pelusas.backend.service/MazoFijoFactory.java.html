@@ -2,27 +2,36 @@
 
 import com.pelusas.backend.domain.Carta;
 import com.pelusas.backend.domain.Mazo;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Component
 @Profile(&quot;e2e&quot;)
 @Primary
-<span class="fc" id="L15">public class MazoFijoFactory implements MazoFactory {</span>
+public class MazoFijoFactory implements MazoFactory {
 
-<span class="fc" id="L17">    private static final int[] VALORES = {5, 5, 2, 5, 8, 8, 9, 9, 10, 10};</span>
+    private final int[] valores;
+
+<span class="fc" id="L21">    public MazoFijoFactory(@Value(&quot;${pelusas.mazo-fijo:5,5,2,5,8,8,9,9,10,10}&quot;) String secuencia) {</span>
+<span class="fc" id="L22">        this.valores = Arrays.stream(secuencia.split(&quot;,&quot;))</span>
+<span class="fc" id="L23">                .map(String::trim)</span>
+<span class="fc" id="L24">                .mapToInt(Integer::parseInt)</span>
+<span class="fc" id="L25">                .toArray();</span>
+<span class="fc" id="L26">    }</span>
 
     @Override
     public Mazo crear() {
-<span class="fc" id="L21">        List&lt;Carta&gt; cartas = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L22" title="All 2 branches covered.">        for (int valor : VALORES) {</span>
-<span class="fc" id="L23">            cartas.add(new Carta(valor));</span>
+<span class="fc" id="L30">        List&lt;Carta&gt; cartas = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L31" title="All 2 branches covered.">        for (int valor : valores) {</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">            cartas.add(valor == Carta.VALOR_ENVENENADA ? Carta.pelusaEnvenenada() : new Carta(valor));</span>
         }
-<span class="fc" id="L25">        return new Mazo(cartas);</span>
+<span class="fc" id="L34">        return new Mazo(cartas);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
